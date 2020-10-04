@@ -1,5 +1,7 @@
 package hu.tutorial;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class App {
@@ -7,7 +9,7 @@ public class App {
     public static final int BOUND = 100;
     public static final int SIZE = 100;
 
-    private static int[] numbers;
+    private static List<Integer> numbers;
 
     public static void main(String[] args) {
         numbers = init(BOUND, SIZE);
@@ -27,55 +29,44 @@ public class App {
         System.out.println("4. Keresés: " + searchResult);
         System.out.println("5. Megszámolás: A sorozatban " + count(divisor) + " darab " + divisor + "-al osztható elem található.");
         int max = maxSelection();
-        System.out.println("6. Maximum kiválasztás: A sorozat " + (max + 1) + ". eleme a legnagyobb értéke " + numbers[max]);
-        System.out.println("A rendezetlen tömb elemei:");
-        print();
-        simpleSort();
-        System.out.println("Rendzeve egyszerű cserés rendezéssel:");
-        print();
-        numbers = init(BOUND, SIZE);
-        System.out.println("A rendezetlen tömb elemei:");
-        print();
-        bubbleSort();
-        System.out.println("Rendzeve buborékos rendezéssel:");
-        print();
+        System.out.println("6. Maximum kiválasztás: A sorozat " + (max + 1) + ". eleme a legnagyobb értéke " + numbers.get(max));
     }
 
-    private static int[] init(int bound, int size) {
+    private static List<Integer> init(int bound, int size) {
         Random random = new Random();
-        int[] numbers = new int[size];
+        List<Integer> numbers = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            numbers[i] = random.nextInt(bound - 1) + 1;
+            numbers.add(random.nextInt(bound - 1) + 1);
         }
         return numbers;
     }
 
     private static void print() {
-        for (int i = 0; i < numbers.length; i++) {
-            System.out.printf("%4d", numbers[i]);
+        for (int i = 0; i < numbers.size(); i++) {
+            System.out.printf("%4d", numbers.get(i));
         }
         System.out.println();
     }
 
     private static int summation() {
         int sum = 0;
-        for (int i = 0; i < numbers.length; i++) {
-            sum = sum + numbers[i];
+        for (int i = 0; i < numbers.size(); i++) {
+            sum = sum + numbers.get(i);
         }
         return sum;
     }
 
     private static boolean decision(int divisor) {
         int i = 0;
-        while (i < numbers.length && !(numbers[i] % divisor == 0)) {
+        while (i < numbers.size() && !(numbers.get(i) % divisor == 0)) {
             i++;
         }
-        return i < numbers.length;
+        return i < numbers.size();
     }
 
     private static int selection(int divisor) {
         int i = 0;
-        while (!(numbers[i] % divisor == 0)) {
+        while (!(numbers.get(i) % divisor == 0)) {
             i++;
         }
         return i;
@@ -83,16 +74,16 @@ public class App {
 
     private static int search(int divisor) {
         int i = 0;
-        while (i < numbers.length && !(numbers[i] % divisor == 0)) {
+        while (i < numbers.size() && !(numbers.get(i) % divisor == 0)) {
             i++;
         }
-        return i < numbers.length ? i : -1;
+        return i < numbers.size() ? i : -1;
     }
 
     private static int count(int divisor) {
         int count = 0;
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] % divisor == 0) {
+        for (int i = 0; i < numbers.size(); i++) {
+            if (numbers.get(i) % divisor == 0) {
                 count++;
             }
         }
@@ -101,35 +92,11 @@ public class App {
 
     private static int maxSelection() {
         int max = 0;
-        for (int i = 1; i < numbers.length; i++) {
-            if (numbers[i] > numbers[max]) {
+        for (int i = 1; i < numbers.size(); i++) {
+            if (numbers.get(i) > numbers.get(max)) {
                 max = i;
             }
         }
         return max;
-    }
-
-    private static void simpleSort() {
-        for (int i = 0; i < numbers.length - 1; i++) {
-            for (int j = i + 1; j < numbers.length; j++) {
-                if (numbers[i] > numbers[j]) {
-                    int p = numbers[i];
-                    numbers[i] = numbers[j];
-                    numbers[j] = p;
-                }
-            }
-        }
-    }
-
-    private static void bubbleSort() {
-        for (int i = numbers.length - 1; i > 1; i--) {
-            for (int j = 0; j < i; j++) {
-                if (numbers[j] > numbers[j + 1]) {
-                    int p = numbers[j];
-                    numbers[j] = numbers[j + 1];
-                    numbers[j + 1] = p;
-                }
-            }
-        }
     }
 }
