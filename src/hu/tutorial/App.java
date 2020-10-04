@@ -3,18 +3,20 @@ package hu.tutorial;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class App {
 
-    public static final int BOUND = 100;
-    public static final int SIZE = 100;
-
     private static List<Integer> numbers;
 
     public static void main(String[] args) {
-        numbers = init();
+        System.out.print("Hány elemű legyen a lista: ");
+        int size = read();
+        System.out.print("Adja meg a generált számok felső határát: ");
+        int bound = read();
+        numbers = init(bound, size);
         print(numbers);
         System.out.println("1. Sorozatszámatás: A számok összege: " + summation());
         int divisor = 2;
@@ -37,10 +39,15 @@ public class App {
         print(sort());
     }
 
-    private static List<Integer> init() {
+    private static int read() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
+
+    private static List<Integer> init(int bound, int size) {
         Random random = new Random();
-        return IntStream.range(0, SIZE)
-                .mapToObj(i -> random.nextInt(BOUND - 1) + 1)
+        return IntStream.range(0, size)
+                .mapToObj(i -> random.nextInt(bound - 1) + 1)
                 .collect(Collectors.toList());
     }
 
