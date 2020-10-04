@@ -4,10 +4,13 @@ import java.util.Random;
 
 public class App {
 
+    public static final int BOUND = 100;
+    public static final int SIZE = 100;
+
     private static int[] numbers;
 
     public static void main(String[] args) {
-        numbers = init(100, 100);
+        numbers = init(BOUND, SIZE);
         print();
         System.out.println("1. Sorozatszámatás: A számok összege: " + summation());
         int divisor = 2;
@@ -25,7 +28,17 @@ public class App {
         System.out.println("5. Megszámolás: A sorozatban " + count(divisor) + " darab " + divisor + "-al osztható elem található.");
         int max = maxSelection();
         System.out.println("6. Maximum kiválasztás: A sorozat " + (max + 1) + ". eleme a legnagyobb értéke " + numbers[max]);
-
+        System.out.println("A rendezetlen tömb elemei:");
+        print();
+        simpleSort();
+        System.out.println("Rendzeve egyszerű cserés rendezéssel:");
+        print();
+        numbers = init(BOUND, SIZE);
+        System.out.println("A rendezetlen tömb elemei:");
+        print();
+        simpleSort();
+        System.out.println("Rendzeve buborékos rendezéssel:");
+        print();
     }
 
     private static int[] init(int bound, int size) {
@@ -94,5 +107,29 @@ public class App {
             }
         }
         return max;
+    }
+
+    private static void simpleSort() {
+        for (int i = 0; i < numbers.length - 1; i++) {
+            for (int j = i + 1; j < numbers.length; j++) {
+                if (numbers[i] > numbers[j]) {
+                    int p = numbers[i];
+                    numbers[i] = numbers[j];
+                    numbers[j] = p;
+                }
+            }
+        }
+    }
+
+    private static void bubbleSort() {
+        for (int i = numbers.length - 1; i > 1; i++) {
+            for (int j = 0; j < i - 1; j++) {
+                if (numbers[j] > numbers[j + 1]) {
+                    int p = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = p;
+                }
+            }
+        }
     }
 }
