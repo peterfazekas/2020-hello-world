@@ -12,7 +12,7 @@ public class App {
     private static List<Integer> numbers;
 
     public static void main(String[] args) {
-        numbers = init(BOUND, SIZE);
+        numbers = init();
         print();
         System.out.println("1. Sorozatszámatás: A számok összege: " + summation());
         int divisor = 2;
@@ -29,29 +29,29 @@ public class App {
         System.out.println("4. Keresés: " + searchResult);
         System.out.println("5. Megszámolás: A sorozatban " + count(divisor) + " darab " + divisor + "-al osztható elem található.");
         int max = maxSelection();
-        System.out.println("6. Maximum kiválasztás: A sorozat " + (max + 1) + ". eleme a legnagyobb értéke " + numbers.get(max));
+        System.out.println("6. Maximum kiválasztás: A sorozat legnagyobb értékeű eleme " +max);
     }
 
-    private static List<Integer> init(int bound, int size) {
+    private static List<Integer> init() {
         Random random = new Random();
         List<Integer> numbers = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            numbers.add(random.nextInt(bound - 1) + 1);
+        for (int i = 0; i < SIZE; i++) {
+            numbers.add(random.nextInt(BOUND - 1) + 1);
         }
         return numbers;
     }
 
     private static void print() {
-        for (int i = 0; i < numbers.size(); i++) {
-            System.out.printf("%4d", numbers.get(i));
+        for (var number : numbers) {
+            System.out.printf("%4d", number);
         }
         System.out.println();
     }
 
     private static int summation() {
         int sum = 0;
-        for (int i = 0; i < numbers.size(); i++) {
-            sum = sum + numbers.get(i);
+        for (var number : numbers) {
+            sum = sum + number;
         }
         return sum;
     }
@@ -82,8 +82,8 @@ public class App {
 
     private static int count(int divisor) {
         int count = 0;
-        for (int i = 0; i < numbers.size(); i++) {
-            if (numbers.get(i) % divisor == 0) {
+        for (var number : numbers) {
+            if (number % divisor == 0) {
                 count++;
             }
         }
@@ -92,9 +92,9 @@ public class App {
 
     private static int maxSelection() {
         int max = 0;
-        for (int i = 1; i < numbers.size(); i++) {
-            if (numbers.get(i) > numbers.get(max)) {
-                max = i;
+        for (var number : numbers) {
+            if (number > max) {
+                max = number;
             }
         }
         return max;
