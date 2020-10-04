@@ -36,7 +36,7 @@ public class App {
         numbers = init(BOUND, SIZE);
         System.out.println("A rendezetlen tömb elemei:");
         print();
-        simpleSort();
+        bubbleSort();
         System.out.println("Rendzeve buborékos rendezéssel:");
         print();
     }
@@ -122,8 +122,8 @@ public class App {
     }
 
     private static void bubbleSort() {
-        for (int i = numbers.length - 1; i > 1; i++) {
-            for (int j = 0; j < i - 1; j++) {
+        for (int i = numbers.length - 1; i > 1; i--) {
+            for (int j = 0; j < i; j++) {
                 if (numbers[j] > numbers[j + 1]) {
                     int p = numbers[j];
                     numbers[j] = numbers[j + 1];
