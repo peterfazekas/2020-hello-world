@@ -1,22 +1,19 @@
 package hu.tutorial;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class App {
 
     private static List<Integer> numbers;
 
     public static void main(String[] args) {
-        System.out.print("Hány elemű legyen a lista: ");
-        int size = read();
-        System.out.print("Adja meg a generált számok felső határát: ");
-        int bound = read();
-        numbers = init(bound, size);
+        numbers = parse(read("szamok.txt"));
         print(numbers);
         System.out.println("1. Sorozatszámatás: A számok összege: " + summation());
         int divisor = 2;
@@ -36,19 +33,39 @@ public class App {
         System.out.println("A rendezetlen tömb elemei:");
         print(numbers);
         System.out.println("Rendzeve Stream-API-val:");
-        print(sort());
+        List<Integer> sortedNumbers = sort();
+        print(sortedNumbers);
+        printAll("rendezett.txt", convert(sortedNumbers));
     }
 
-    private static int read() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+    private static List<String> read(String file) {
+        List<String> lines = new ArrayList<>();
+        try {
+            lines = Files.readAllLines(Path.of(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
     }
 
-    private static List<Integer> init(int bound, int size) {
-        Random random = new Random();
-        return IntStream.range(0, size)
-                .mapToObj(i -> random.nextInt(bound - 1) + 1)
+    private static List<Integer> parse(List<String> lines) {
+        return lines.stream()
+                .map(i -> Integer.parseInt(i))
                 .collect(Collectors.toList());
+    }
+
+    private static List<String> convert(List<Integer> lines) {
+        return lines.stream()
+                .map(i -> String.valueOf(i))
+                .collect(Collectors.toList());
+    }
+
+    private static void printAll(String filename, List<String> lines) {
+        try {
+            Files.write(Path.of(filename), lines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void print(List<Integer> list) {
