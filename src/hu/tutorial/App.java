@@ -12,7 +12,7 @@ public class App {
     private static List<Integer> numbers;
 
     public static void main(String[] args) {
-        numbers = init(BOUND, SIZE);
+        numbers = init();
         print();
         System.out.println("1. Sorozatszámatás: A számok összege: " + summation());
         int divisor = 2;
@@ -32,11 +32,11 @@ public class App {
         System.out.println("6. Maximum kiválasztás: A sorozat " + (max + 1) + ". eleme a legnagyobb értéke " + numbers.get(max));
     }
 
-    private static List<Integer> init(int bound, int size) {
+    private static List<Integer> init() {
         Random random = new Random();
         List<Integer> numbers = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            numbers.add(random.nextInt(bound - 1) + 1);
+        for (int i = 0; i < SIZE; i++) {
+            numbers.add(random.nextInt(BOUND - 1) + 1);
         }
         return numbers;
     }
